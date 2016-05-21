@@ -417,6 +417,45 @@ img.pull-left {
 /* 04. =forms
 /* =================================================================== */
 
+#user-action-buttons {
+	width: 100%;
+	padding: 5% 5% 5% 5%;
+}
+
+#loginbutton {
+	font: 15px/30px "raleway-heavy", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	height: 60px;
+	padding: 15px 30px;
+	width: 50%;
+	margin-left: 25%;
+	background-color: #2B3978;
+	border-radius: 10px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+#loginbutton:hover {
+	background-color: #3B5998;
+}
+
+#registerbutton {
+	font: 15px/30px "raleway-heavy", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	height: 60px;
+	padding: 15px 30px;
+	width: 50%;
+	margin-left: 25%;
+	background-color: #2C8F30;
+	border-radius: 10px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+#registerbutton:hover {
+	background-color: #4CAF50;
+}
+
 form {
 	margin-bottom: 30px;
 }
@@ -481,7 +520,7 @@ input[type="button"] {
 	padding: 9px 16px;
 	margin: 0 3px 6px 0;
 	background: #fdc501;
-	color: #000000;
+	color: #fff;
 	text-decoration: none;
 	cursor: pointer;
 	height: auto;
@@ -975,7 +1014,7 @@ ul#nav li.current a:after {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
-	min-height: 630px;
+	height: 100%;
 	width: 100%;
 	text-align: left;
 	position: relative;
