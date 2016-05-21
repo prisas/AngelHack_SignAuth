@@ -395,6 +395,25 @@ img.pull-left {
 /* 04. =forms
 /* =================================================================== */
 
+.flashes_error, .flashes_success {
+	width: 50%;
+	list-style-type: none;
+	padding: 20px;
+	position: absolute;
+	margin-top: 5%;
+	margin-left: 25%;
+}
+
+.flashes_error > li {
+	text-align: center;
+	color: #EA4335;
+}
+
+.flashes_success > li {
+	text-align: center;
+	color: #34A853;
+}
+
 #user-action-buttons {
 	width: 100%;
 	padding: 5% 5% 5% 5%;

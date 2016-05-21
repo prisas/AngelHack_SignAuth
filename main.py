@@ -1,43 +1,31 @@
-import sqlite3
-from contextlib import closing
-from flask import Flask, render_template, g
+# from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import *
+from flask import Flask, render_template, redirect, url_for, flash, request
+
 app = Flask(__name__)
 
-
-# DB configuration
-DATABASE = '/tmp/flaskr.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = '1234'
-
-app.config.from_object(__name__)
+db = create_engine('sqlite:///signature.db')
+db.echo = False
+metadata = MetaData(db)
 
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+users = Table('users', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('name', String),
+    Column('email', String, unique=True),
+    Column('password', String),
+    Column('img_id', Integer)
+)
+#users.create()
 
 
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+def run(stmt):
+    rs = stmt.execute()
+    for row in rs:
+        return row
+
 
 # ----- Routes -----
-
-
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-
-@app.teardown_request
-def teardown_request(exception):
-    db = getattr(g, 'db', None)
-    if db is not None:
-        db.close()
-
 
 @app.route('/')
 def index():
@@ -45,32 +33,58 @@ def index():
 
 
 @app.route('/login')
-def login():
+def login_user():
     return render_template('login.html')
 
 
 @app.route('/register')
-def regiter_user():
+def register_user():
     return render_template('register.html')
 
 
-"""
-@app.route('/user/<username>')
-def profile():
-    return 0
+@app.route('/home', methods=['GET', 'POST'])
+def treat_login():
+    if request.method == 'POST':
+        my_email = request.form['email']
+        s = users.select(users.c.email == my_email)
+        alreadyThere = run(s)
+        print(alreadyThere)
+        if alreadyThere is None:
+            flash('Invalid email or password', 'error')
+            return redirect(url_for('login_user'))
+        else:
+            my_password = request.form['password']
+            s = users.select(users.c.email == my_email)
+            passwordCorrect = run(s)
+            if my_password == passwordCorrect[3]:
+                return render_template('home.html')
+            else:
+                flash('Invalid email or password', 'error')
+                return redirect(url_for('login_user'))
 
 
-def edit_profile():
-    return 0
-
-
-def my_signatures():
-    return 0
-"""
-
-# ------------------
+@app.route('/registering', methods=['GET', 'POST'])
+def treat_register():
+    if request.method == 'POST':
+        my_email = request.form['email']
+        s = users.select(users.c.email == my_email)
+        alreadyThere = run(s)
+        if alreadyThere is None:
+            my_password = request.form['password']
+            my_password2 = request.form['password2']
+            if my_password == my_password2:
+                i = users.insert()
+                i.execute(name=request.form['name'], email=my_email, password=my_password)
+                flash('Successfully registered, now you can Log In!', 'success'),
+                return render_template('login.html')
+            else:
+                flash('Your passwords do not match!', 'error')
+                return redirect(url_for('register_user'))
+        else:
+            flash('This email is already registered!', 'error')
+            return redirect(url_for('login_user'))
 
 
 if __name__ == "__main__":
+    app.secret_key = '1234'
     app.run(debug=True)
-    init_db()

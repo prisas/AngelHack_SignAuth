@@ -33,6 +33,26 @@
 
 <body background="{{ url_for('static', filename='images/signature-bg.jpg') }}">
 
+   {% with messages = get_flashed_messages(category_filter=["error"]) %}
+      {% if messages %}
+         <ul class=flashes_error>
+         {% for message in messages %}
+            <li><strong>{{ message }}</strong></li>
+         {% endfor %}
+         </ul>
+      {% endif %}
+   {% endwith %}
+
+   {% with messages = get_flashed_messages(category_filter=["success"]) %}
+      {% if messages %}
+         <ul class=flashes_success>
+         {% for message in messages %}
+            <li><strong>{{ message }}</strong></li>
+         {% endfor %}
+         </ul>
+      {% endif %}
+   {% endwith %}
+
 	<!-- header
    ================================================== -->
    <header id="main-header">
@@ -64,9 +84,9 @@
    </header> <!-- end header -->
 
    <!-- Register Form -->
-   <form id="registerlogin-form" action="#" method="post">
+   <form id="registerlogin-form" action="/home" method="post">
     	<dl>
-      		<input type=text name="mail" placeholder="Mail adress">
+      		<input type=text name="email" placeholder="Mail adress">
       		<input type=password name="password" placeholder="Password">
 	       	<input type="submit" id="loginbutton" style="width:100%; margin-left:0; border: none; color: white" value="Login">
     	</dl>
