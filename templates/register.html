@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>SignAuth - Keeping your signature unique</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+ 	<!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+   <!-- script
+   ================================================== -->
+	<script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" >
+
+</head>
+
+<body background="{{ url_for('static', filename='images/signature-bg.jpg') }}">
+
+	<!-- header
+   ================================================== -->
+   <header id="main-header">
+
+   	<div class="row">
+
+	      <div class="logo">
+	         <a href="index.html">SignAuth</a>
+	      </div>
+
+	      <nav id="nav-wrap">
+
+	         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">
+	         	<span class="menu-icon">Menu</span>
+	         </a>
+         	<a class="mobile-btn" href="#" title="Hide navigation">
+         		<span class="menu-icon">Menu</span>
+         	</a>
+
+	         <ul id="nav" class="nav">
+	            <li><a class="smoothscroll" href="/">Home</a></li>
+	            <li><a class="smoothscroll" href="/login">Login</a></li>
+	         </ul> <!-- end #nav -->
+
+	      </nav> <!-- end #nav-wrap -->
+
+	   </div>
+
+   </header> <!-- end header -->
+
+   <!-- Register Form -->
+   <form id="registerlogin-form" action="#" method="post">
+    	<dl>
+      		<input type=text name="name" placeholder="Full Name">
+      		<input type=text name="mail" placeholder="Mail adress">
+      		<input type=password name="password" placeholder="Password">
+      		<input type=password name="password2" placeholder="Type your password again">
+	       	<input type="submit" id="registerbutton" style="width:100%; margin-left:0; border: none; color: white" value="Register">
+    	</dl>
+  </form>
+
+
+   <!-- Java Script
+   ================================================== -->
+   <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.flexslider-min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.fittext.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.placeholder.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+</html>

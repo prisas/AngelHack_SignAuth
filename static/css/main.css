@@ -286,29 +286,7 @@ img.pull-left {
 
 /* Style Placeholder Text
 --------------------------------------------------------------------- */
-::-webkit-input-placeholder {
-	color: #12151B;
-}
 
-:-moz-placeholder {
-
-	/* Firefox 18- */
-	color: #12151B;
-}
-
-::-moz-placeholder {
-
-	/* Firefox 19+ */
-	color: #12151B;
-}
-
-:-ms-input-placeholder {
-	color: #12151B;
-}
-
-.placeholder {
-	color: #12151B !important;
-}
 
 /* block grids default paddings
 --------------------------------------------------------------------- */
@@ -456,8 +434,16 @@ img.pull-left {
 	background-color: #4CAF50;
 }
 
-form {
-	margin-bottom: 30px;
+#registerlogin-form {
+	position: relative;
+	padding-top: 10%;
+	width: 100%;
+}
+
+#registerlogin-form > dl {
+	padding: 0;
+	margin-left: 25%;
+	width: 50%;
 }
 
 fieldset {
@@ -512,9 +498,7 @@ textarea:focus {
 .button,
 .button:visited,
 button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type="reset"] {
 	display: inline-block;
 	font: 16px/30px "raleway-heavy", sans-serif;
 	padding: 9px 16px;
@@ -538,9 +522,7 @@ input[type="button"] {
 
 .button:hover,
 button:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover {
+input[type="reset"]:hover{
 	color: #FFFFFF;
 	background: #e64e04;
 }
