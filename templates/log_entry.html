@@ -33,26 +33,6 @@
 
 <body background="{{ url_for('static', filename='images/signature-bg.jpg') }}">
 
-   {% with messages = get_flashed_messages(category_filter=["error"]) %}
-      {% if messages %}
-         <ul class=flashes_error>
-         {% for message in messages %}
-            <li><strong>{{ message }}</strong></li>
-         {% endfor %}
-         </ul>
-      {% endif %}
-   {% endwith %}
-
-   {% with messages = get_flashed_messages(category_filter=["success"]) %}
-      {% if messages %}
-         <ul class=flashes_success>
-         {% for message in messages %}
-            <li><strong>{{ message }}</strong></li>
-         {% endfor %}
-         </ul>
-      {% endif %}
-   {% endwith %}
-
 	<!-- header
    ================================================== -->
    <header id="main-header">
@@ -74,7 +54,7 @@
 
 	         <ul id="nav" class="nav">
 	            <li><a class="smoothscroll" href="/">Home</a></li>
-	            <li><a class="smoothscroll" href="/register">Register</a></li>
+	            <li><a class="smoothscroll" href="/login">Login</a></li>
 	         </ul> <!-- end #nav -->
 
 	      </nav> <!-- end #nav-wrap -->
@@ -83,14 +63,26 @@
 
    </header> <!-- end header -->
 
-   <!-- Register Form -->
-   <form id="registerlogin-form" action="/home" method="post">
-    	<dl>
-      		<input type=text name="email" placeholder="Mail adress">
-      		<input type=password name="password" placeholder="Password">
-	       	<input type="submit" id="loginbutton" style="width:100%; margin-left:0; border: none; color: white" value="Login">
-    	</dl>
-  </form>
+   <table class=flashes_logs>
+   	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<tr>
+				<th>Date</th>
+    			<th>Organization</th>
+    			<th>Accepted</th>
+			</tr>
+			{% for message in messages %}
+				<tr>
+					<td colspan="1">{{ message[1] }}</td>
+					<td colspan="1">{{ message[2] }}</td>
+					{% if message[3] == true %}<td><img src="{{ url_for('static', filename='images/tick.png') }}"></td>{% endif %}
+					{% if message[3] == false %}<td><img src="{{ url_for('static', filename='images/cross.png') }}"></td>{% endif %}
+				</tr> 
+			{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+   </table>
 
 
    <!-- Java Script

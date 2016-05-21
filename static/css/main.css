@@ -395,6 +395,36 @@ img.pull-left {
 /* 04. =forms
 /* =================================================================== */
 
+.flashes_logs {
+	margin-top: 10%;
+	width: 100%;
+	table-layout: fixed;
+	border-radius: 100%;
+}
+
+.flashes_logs tr {
+	border: 1px solid black;
+	max-height: 50px;
+	background-color: #F7F7F6;
+}
+
+.flashes_logs tr:hover {
+	border: 1px solid black;
+	max-height: 50px;
+	background-color: #748184;
+}
+
+.flashes_logs td, th {
+	color: black;
+	text-align: center;
+	width: 33%;
+}
+
+.flashes_logs td > img {
+	position: relative;
+	max-height: 50px;
+}
+
 .flashes_error, .flashes_success {
 	width: 50%;
 	list-style-type: none;

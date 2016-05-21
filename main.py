@@ -1,6 +1,7 @@
 # from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from flask import Flask, render_template, redirect, url_for, flash, request
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -18,11 +19,26 @@ users = Table('users', metadata,
 )
 #users.create()
 
+log = Table('logs', metadata,
+    Column('id', Integer, ForeignKey("users.id"), primary_key=True),
+    Column('date_time', Text, primary_key=True),
+    Column('whereFrom', String),
+    Column('accepted', Boolean),
+)
+#log.create()
+
 
 def run(stmt):
     rs = stmt.execute()
     for row in rs:
         return row
+
+
+def renderLogData(stmt):
+    rs = stmt.execute()
+    for row in rs:
+        flash(row)
+    return
 
 
 # ----- Routes -----
@@ -47,17 +63,17 @@ def treat_login():
     if request.method == 'POST':
         my_email = request.form['email']
         s = users.select(users.c.email == my_email)
-        alreadyThere = run(s)
-        print(alreadyThere)
-        if alreadyThere is None:
+        rs = run(s)
+        print(rs)
+        if rs is None:
             flash('Invalid email or password', 'error')
             return redirect(url_for('login_user'))
         else:
             my_password = request.form['password']
-            s = users.select(users.c.email == my_email)
-            passwordCorrect = run(s)
-            if my_password == passwordCorrect[3]:
-                return render_template('home.html')
+            if my_password == rs[3]:
+                s = log.select(log.c.id == rs[0])
+                renderLogData(s)
+                return render_template('log_entry.html')
             else:
                 flash('Invalid email or password', 'error')
                 return redirect(url_for('login_user'))
@@ -68,8 +84,8 @@ def treat_register():
     if request.method == 'POST':
         my_email = request.form['email']
         s = users.select(users.c.email == my_email)
-        alreadyThere = run(s)
-        if alreadyThere is None:
+        rs = run(s)
+        if rs is None:
             my_password = request.form['password']
             my_password2 = request.form['password2']
             if my_password == my_password2:
