@@ -54,19 +54,23 @@
 
 	         <ul id="nav" class="nav">
 	            <li><a class="smoothscroll" href="#hero">Home</a></li>
+	            {% if status == false %}
 	            <li><a class="smoothscroll" href="#services">Service</a></li>
 	            <li><a class="smoothscroll" href="#about">About</a></li>
 	            <li><a class="smoothscroll" href="#contact">Contact</a></li>
+	            {% endif %}
+	            {% if status == true %}
+	            <li><a class="smoothscroll" href="/my_log">My log</a></li>
+	            <li><a class="smoothscroll" href="/logout">Logout</a></li>
+	            {% endif %}
 	         </ul> <!-- end #nav -->
 
 	      </nav> <!-- end #nav-wrap -->
-
 	      <ul class="header-social">
 	        	<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 	        	<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 	        	<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 	      </ul>
-
 	   </div>
 
    </header> <!-- end header -->
@@ -79,11 +83,12 @@
 		<div class="row hero-content">
 
 			<div class="twelve columns hero-container">
-
+			{% if status == false %}
 				<ul id="user-action-buttons">
 		      		<a href="/login"><button id="loginbutton">Login</button></a>
 		      		<a href="/register"><button id="registerbutton">Register</button></a>
 		    	</ul>
+		    {% endif %}
 
 	      </div> <!-- end twelve columns-->
 

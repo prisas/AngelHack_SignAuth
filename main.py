@@ -9,6 +9,9 @@ db = create_engine('sqlite:///signature.db')
 db.echo = False
 metadata = MetaData(db)
 
+status_connected = False
+rs = []
+
 
 users = Table('users', metadata,
     Column('id', Integer, primary_key=True),
@@ -45,10 +48,10 @@ def renderLogData(stmt):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', status=status_connected)
 
 
-@app.route('/login')
+@app.route('/login/')
 def login_user():
     return render_template('login.html')
 
@@ -58,11 +61,20 @@ def register_user():
     return render_template('register.html')
 
 
+@app.route('/my_log')
+def show_log():
+    global rs
+    s = log.select(log.c.id == rs[0])
+    renderLogData(s)
+    return render_template('log_entry.html', status=status_connected)
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def treat_login():
     if request.method == 'POST':
         my_email = request.form['email']
         s = users.select(users.c.email == my_email)
+        global rs
         rs = run(s)
         print(rs)
         if rs is None:
@@ -71,9 +83,9 @@ def treat_login():
         else:
             my_password = request.form['password']
             if my_password == rs[3]:
-                s = log.select(log.c.id == rs[0])
-                renderLogData(s)
-                return render_template('log_entry.html')
+                global status_connected
+                status_connected = True
+                return redirect(url_for('show_log'))
             else:
                 flash('Invalid email or password', 'error')
                 return redirect(url_for('login_user'))
@@ -99,6 +111,28 @@ def treat_register():
         else:
             flash('This email is already registered!', 'error')
             return redirect(url_for('login_user'))
+
+
+@app.route('/logout')
+def logout():
+    global status_connected
+    status_connected = False
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(403)
+def page_forbidden(e):
+    return render_template('403.html'), 403
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(IndexError)
+def internal_error(e):
+    return render_template('403.html')
 
 
 if __name__ == "__main__":

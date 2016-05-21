@@ -397,7 +397,8 @@ img.pull-left {
 
 .flashes_logs {
 	margin-top: 10%;
-	width: 100%;
+	width: 90%;
+	margin-left: 5%;
 	table-layout: fixed;
 	border-radius: 100%;
 }
