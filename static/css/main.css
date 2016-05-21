@@ -633,6 +633,7 @@ hr {
 .section-head p {
 	font: 20px/36px "merriweather-light", serif;
 	width: 95%;
+	text-align: justify;
 }
 
 .section-head:hover h1 + hr {
