@@ -40,7 +40,7 @@
    	<div class="row">
 
 	      <div class="logo">
-	         <a href="index.html">SignAuth</a>
+	         <a href="#">SignAuth</a>
 	      </div>
 
 	      <nav id="nav-wrap">
@@ -81,49 +81,9 @@
 			<div class="twelve columns hero-container">
 
 				<ul id="user-action-buttons">
-		      		<button id="loginbutton">Login</button>
-		      		<button id="registerbutton">Register</button>
+		      		<a href="/login"><button id="loginbutton">Login</button></a>
+		      		<a href="/regiter"><button id="registerbutton">Register</button></a>
 		    	</ul>
-
-			   <!-- hero-slider start-->
-			   <div id="hero-slider" class="flexslider">
-
-				   <ul class="slides">
-
-					   <!-- slide -->
-					   <li>
-						   <div class="flex-caption">
-								<h1 class="">Say hello to <span>Kreo</span>. We create awesome and stunning
-									digital solutions.
-								</h1>
-
-								<h3 class="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</h3>
-							</div>
-					   </li>
-
-					   <!-- slide -->
-					   <li>
-							<div class="flex-caption">
-								<h1 class="">We are a small design studio dedicated to build great digital
-									products.</h1>
-
-								<h3 class="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</h3>
-							</div>
-					   </li>
-
-					   <!-- slide -->
-					   <li>
-						   <div class="flex-caption">
-								<h1 class="">Take a look at some of <a class="smoothscroll" href="#portfolio" title="portfolio" >our works</a> or
-								<a class="smoothscroll" href="#contact" title="contact us">get in touch</a> to discuss how we can help you.</h1>
-
-								<h3 class="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</h3>
-							</div>
-					   </li>
-
-				   </ul>
-
-			   </div> <!-- end hero-slider -->
 
 	      </div> <!-- end twelve columns-->
 
@@ -411,30 +371,6 @@
 
       </div> <!-- end row -->
 
-      <div id="call-to-action">
-
-		   <div class="row section-ads">
-
-		      <div class="twelve columns">
-
-			      <h2><a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT">Styleshout Recommends Dreamhost<span>.</span></a></h2>
-
-			      <p>
-			      Looking for an awesome and reliable webhosting? Try <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT"><span>DreamHost</span></a>.
-					Get <span>$50 off</span> when you sign up with the promocode <span>styleshout</span>.
-					<!-- Simply type	the promocode in the box labeled “Promo Code” when placing your order. -->
-					</p>
-
-					<div class="action">
-			         <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT" >Sign Up Now</a>
-	         	</div>
-
-			   </div>
-
-		   </div> <!-- end section-ads -->
-
-	   </div> <!-- end call-to-action -->
-
    </section> <!-- end about -->
 
 
@@ -454,7 +390,7 @@
                   </p>
 
                   <div class="testimonial-author">
-                    	<img src="images/avatars/avatar-1.jpg" alt="Author image">
+                    	<img src="{{ url_for('static', filename='images/avatars/avatar-1.jpg') }}" alt="Author image">
                     	<div class="author-info">
                     		Steve Jobs
                     		<span class="position">CEO, Apple.</span>
@@ -468,7 +404,7 @@
                   nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.
                   </p>
                   <div class="testimonial-author">
-                    	<img src="images/avatars/avatar-2.jpg" alt="Author image">
+                    	<img src="{{ url_for('static', filename='images/avatars/avatar-2.jpg') }}" alt="Author image">
                     	<div class="author-info">
                     		John Doe
                     		<span>CEO, ABC Corp.</span>
@@ -484,135 +420,21 @@
 
    </section> <!-- end testimonials section -->
 
-
-   <!-- contact
-   ================================================== -->
-   <section id="contact">
-
-   	<div class="row section-head">
-
-   		<div class="twelve columns">
-
-	         <h1>Get In Touch With Us<span>.</span></h1>
-
-	         <hr />
-
-	      </div>
-
-      </div> <!-- end section-head -->
-
-      <div class="row">
-
-      	<div id="contact-form" class="six columns tab-whole left">
-
-            <!-- form -->
-            <form name="contactForm" id="contactForm" method="post" action=""  >
-      			<fieldset>
-
-                  <div class="group">
- 						   <input name="contactName" type="text" id="contactName" placeholder="Name" value="" minLength="2" required />
-                  </div>
-                  <div>
-	      			   <input name="contactEmail" type="email" id="contactEmail" placeholder="Email" value="" required />
-	               </div>
-                  <div>
-	     				   <input name="contactSubject" type="text" id="contactSubject" placeholder="Subject"  value="" />
-	               </div>
-                  <div>
-	                 	<textarea name="contactMessage"  id="contactMessage" placeholder="message" rows="10" cols="50" required ></textarea>
-	               </div>
-                  <div>
-                     <button class="submitform">Submit</button>
-                     <div id="submit-loader">
-                        <div class="text-loader">Sending...</div>
-       				      <div class="s-loader">
-								  	<div class="bounce1"></div>
-								  	<div class="bounce2"></div>
-								  	<div class="bounce3"></div>
-								</div>
-							</div>
-                  </div>
-
-      			</fieldset>
-      		</form> <!-- Form End -->
-
-            <!-- contact-warning -->
-            <div id="message-warning"></div>
-            <!-- contact-success -->
-      		<div id="message-success">
-               <i class="icon-ok"></i>Your message was sent, thank you!<br />
-      		</div>
-
-         </div>
-
-         <div class="six columns tab-whole right">
-
-            <p class="lead">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-
-	         <h3 class="address">Come Visit</h3>
-
-	         <p>
-            1600 Amphitheatre Parkway<br>
-            Mountain View, CA<br>
-            94043 US
-            </p>
-
-            <h3>Contact Numbers:</h3>
-			   <p>Phone: (000) 555 1212<br>
-			   	Mobile: (000) 555 0100<br>
-			     	Fax: (000) 555 0101
-			   </p>
-
-         </div>
-
-      </div> <!-- end row -->
-
-   </section>  <!-- end contact -->
-
-
    <!-- Footer
    ================================================== -->
    <footer>
-
-      <div class="row">
-
-      	<div class="twelve columns content group">
 
 			<ul class="social-links">
                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
                <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-               <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
-               <li><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
-               <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-               <li><a href="#"><i class="fa fa-skype"></i></a></li>
             </ul>
 
             <hr />
 
-            <div class="info">
-
-            	<div class="footer-logo"></div>
-
-	            <p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
-	            Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem
-	            nibh id elit.
-	            </p>
-
-	         </div>
-
-      	</div>
-
-         <ul class="copyright">
-         	<li>&copy; Copyright 2015 KREO.</li>
-         	<li>Design by <a href="http://www.styleshout.com/">Styleshout.</a>.</li>
-         </ul>
-
          <div id="go-top">
             <a class="smoothscroll" title="Back to Top" href="#hero">Back to Top<i class="fa fa-angle-up"></i></a>
          </div>
-
-      </div> <!-- end row -->
 
    </footer> <!-- end footer -->
 
