@@ -44,7 +44,7 @@ body {
 	background: #0F1215;
 	font: 16px/30px "merriweather-regular", serif;
 	font-weight: normal;
-	color: #575859;
+	color: #ffffff;
 }
 
 /* links
@@ -415,8 +415,11 @@ img.pull-left {
 }
 
 #user-action-buttons {
-	width: 100%;
-	padding: 5% 5% 5% 5%;
+	width: 50%; /*can be in percentage also.*/
+  height: auto;
+  margin: 190px auto;
+  padding: -250px;
+  position: relative;
 }
 
 #loginbutton {
@@ -1698,7 +1701,7 @@ ul#nav li.current a:after {
 /* =================================================================== */
 
 #services {
-	background: #12151B;
+	background: #4A4A4A;
 	padding-top: 120px;
 	padding-bottom: 120px;
 	border-bottom: 1px solid #15191d;
@@ -1782,7 +1785,7 @@ ul#nav li.current a:after {
 /* =================================================================== */
 
 #about {
-	background: #111417;
+	background: #333333;
 	padding-top: 120px;
 	padding-bottom: 120px;
 	border-bottom: 1px solid #15191d;
@@ -2226,7 +2229,6 @@ ul#nav li.current a:after {
 #contact {
 	background: #12151B;
 	padding-top: 120px;
-	padding-bottom: 138px;
 	overflow: hidden;
 	border-bottom: 1px solid #15191d;
 }
@@ -2632,7 +2634,7 @@ footer .social-links li:first-child {
 	height: 54px;
 	width: 200px;
 	margin-left: -100px;
-	background: #e64e04;
+	background: #758a81;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	color: #FFFFFF;
 	text-align: center;
@@ -2648,7 +2650,7 @@ footer .social-links li:first-child {
 }
 
 #go-top a:hover {
-	background: #fdc501;
+	background: #758ad1;
 	color: #000000;
 }
 
