@@ -78,7 +78,7 @@
 					<td>{{ message[2] }}</td>
                     <td>
                         <form id='formName' action='/showsimulation' method='post'>
-                            <input name='dataCross' type='text' value=message[4] style='display:none'/>
+                            <input name='dataCross' type='text' value='{{ message[4] }}' style='display:none'/>
                      {% if message[3] == true %} <div><input type='submit' value='' style="background-color:#008000")></div>{% endif %}   
                      {% if message[3] == false %} <div><input type='submit' value='' style="background-color:#ff0000")></div>{% endif %}
                         </form>

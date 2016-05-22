@@ -132,14 +132,15 @@ def add_log_entry():
     s = users.select(users.c.id == rs[0])
     rs = run(s)
     i = log.insert()
-    while z < 10:
+    while z < 50:
         v0 = randint(0, 3)
         v1 = randint(0, 3)
         v2 = randint(0, 3)
         v3 = randint(0, 3)
         z += 1
         new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
-        if new_signature == rs[4]:
+        new_signature1 = str(new_signature)
+        if new_signature1 == rs[4]:
             i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=True, img_id=new_signature)
             return redirect(url_for('show_log'))
     i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=False, img_id=new_signature)
