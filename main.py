@@ -63,14 +63,10 @@ def register_user():
 
 @app.route('/my_log')
 def show_log():
-    global status_connected
-    if status_connected:
-        global rs
-        s = log.select(log.c.id == rs[0])
-        renderLogData(s)
-        return render_template('log_entry.html')
-    else:
-        return render_template('403.html')
+    global rs
+    s = log.select(log.c.id == rs[0])
+    renderLogData(s)
+    return render_template('log_entry.html', status=status_connected)
 
 
 @app.route('/home', methods=['GET', 'POST'])
