@@ -429,7 +429,7 @@ img.pull-left {
 #user-action-buttons {
 	width: 50%; /*can be in percentage also.*/
   height: auto;
-  margin: 190px auto;
+  margin: 20px auto;
   padding: -250px;
   position: relative;
 }
