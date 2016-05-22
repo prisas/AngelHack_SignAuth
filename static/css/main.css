@@ -595,7 +595,7 @@ hr {
 	border: solid #283436;
 	border-width: 3px 0 0;
 	width: 100px;
-	margin: 11px 0 30px;
+	margin: 0px 0 0px;
 	height: 0;
 	clear: both;
 	text-align: left;
@@ -1798,8 +1798,8 @@ ul#nav li.current a:after {
 
 #about {
 	background: #333333;
-	padding-top: 20px;
-	padding-bottom: 120px;
+	padding-top: 40px;
+	padding-bottom: 50px;
 	border-bottom: 1px solid #15191d;
 }
 
