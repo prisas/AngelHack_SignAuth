@@ -18,7 +18,7 @@ body {
 }
 
 body {
-	background: #4a4a4a;
+	background-color: #4A4A4A;
 	font: 16px/30px "merriweather-regular", serif;
 	font-weight: normal;
 	color: #ffffff;
@@ -502,13 +502,13 @@ select {
 	border: 0;
 	outline: none;
 	vertical-align: middle;
-	color: #a3a4a6;
+	color: black;
 	font-family: "raleway-bold", sans-serif;
 	font-size: 15px;
 	line-height: 24px;
 	border-radius: 3px;
 	max-width: 100%;
-	background: rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.6);
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
 	-webkit-transition: all 0.3s ease-in-out;
@@ -1714,7 +1714,6 @@ ul#nav li.current a:after {
 /* =================================================================== */
 
 #services {
-	background: #4A4A4A;
 	padding-top: 30px;
 	padding-bottom: 120px;
 	border-bottom: 1px solid #15191d;
@@ -2574,7 +2573,7 @@ footer .social-links li {
 }
 
 footer .social-links li a {
-	color: rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.5);
 }
 
 footer .social-links li a:hover {
