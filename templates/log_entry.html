@@ -70,15 +70,19 @@
 			<tr>
 				<th>Date</th>
     			<th>Organization</th>
-    			<th>Accepted</th>
+    			<th>Status</th>
 			</tr>
 			{% for message in messages %}
-				<tr>
-					<td colspan="1">{{ message[1] }}</td>
-					<td colspan="1">{{ message[2] }}</td>
-					{% if message[3] == true %}<td><img src="{{ url_for('static', filename='images/tick.png') }}"></td>{% endif %}
-					{% if message[3] == false %}<td><img src="{{ url_for('static', filename='images/cross.png') }}"></td>{% endif %}
-					<td colspan="1">{{ message[1] }}</td>
+				<tr>  
+					<td>{{ message[1] }}</td>
+					<td>{{ message[2] }}</td>
+                    <td>
+                        <form id='formName' action='/showsimulation' method='post'>
+                            <input name='dataCross' type='text' value=message[4] style='display:none'/>
+                     {% if message[3] == true %} <div><input type='submit' value='' style="background-color:#008000")></div>{% endif %}   
+                     {% if message[3] == false %} <div><input type='submit' value='' style="background-color:#ff0000")></div>{% endif %}
+                        </form>
+                    </td>                       
 				</tr> 
 			{% endfor %}
 			</ul>
