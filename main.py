@@ -146,17 +146,23 @@ def add_log_entry():
     return redirect(url_for('show_log'))
 
 
-"""@app.route('/showsimulation')
+@app.route('/showsimulation')
 def showSignature():
     global rs
     # My signature
-    myv0 = rs[4]/1000
-    myv1 = (rs[4]%1000)/100
-    myv2 = (rs[4]%100)/10
-    myv3 = rs[4]%10
+    myv0 = rs[4] / 1000
+    myv1 = (rs[4] % 1000) / 100
+    myv2 = (rs[4] % 100) / 10
+    myv3 = rs[4] % 10
     # DB signature
-    s = log.select(log.c.id == rs[0])
-"""
+    selected_image = request.form['dataCross']
+    logv0 = selected_image / 1000
+    logv1 = (selected_image % 1000) / 100
+    logv2 = (selected_image % 100) / 10
+    logv3 = selected_image % 10
+    return render_template('login.html', myv0=myv0, myv1=myv1, myv2=myv2, myv3=myv3, logv0=logv0, logv1=logv1, logv2=logv2, logv3=logv3)
+
+
 @app.route('/backanimation')
 def wheretoback():
     if status_connected:
