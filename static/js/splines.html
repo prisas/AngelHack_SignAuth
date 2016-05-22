@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - lines - splines</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+				width: 50%;
+			}
+
+			a {
+				color:#0078ff;
+			}
+
+			#info {
+				position: absolute;
+				top: 10px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+				z-index:100;
+			}
+
+			a {
+				color: orange;
+				text-decoration: none;
+			}
+
+			a:hover {
+				color: #0080ff;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<div id="info">
+			<h3><a href="/backanimation">&#8592; Back to my log</a> - Signature simulation</h3>
+		</div>
+
+		<script src="three.js"></script>
+		<script src="hilbert2D.js"></script>
+		<script src="Detector.js"></script>
+		<script src="stats.min.js"></script>
+
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var mouseX = 0, mouseY = 0,
+
+			windowHalfX = window.innerWidth / 2,
+			windowHalfY = window.innerHeight / 2,
+
+			camera, scene, renderer, material;
+
+			init();
+			animate();
+
+			function init() {
+
+				var i, n_sub, container;
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 33, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 600;
+
+				scene = new THREE.Scene();
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				/*
+				 * @param center     Center of Hilbert curve.
+				 * @param size       Total width of Hilbert curve.
+				 * @param iterations Number of subdivisions.
+				 * @param v0         Corner index -X, +Y, -Z.
+				 * @param v1         Corner index -X, +Y, +Z.
+				 * @param v2         Corner index -X, -Y, +Z.
+				 * @param v3         Corner index -X, -Y, -Z.
+				 *
+				 * function hilbert3D( center, size, iterations, v0, v1, v2, v3 ) */
+
+				var v0 = Math.floor((Math.random() * 10))%4;
+				var v1 = Math.floor((Math.random() * 10))%4;
+				var v2 = Math.floor((Math.random() * 10))%4;
+				var v3 = Math.floor((Math.random() * 10))%4;
+
+				console.log(v0, v1, v2, v3);
+
+				var geometry = new THREE.Geometry(),
+					points = hilbert2D( new THREE.Vector3( 0,0,0 ), 200.0, 0, v0, v1, v2, v3),
+					colors = [];
+
+				n_sub = 20;
+
+				var position, position2, index, index2;
+
+				var spline = new THREE.Spline( points );
+
+				for ( i = 0; i < points.length * n_sub; i ++ ) {
+
+					index = i / ( points.length * n_sub );
+					position = spline.getPoint( index );
+
+					geometry.vertices[ i ] = new THREE.Vector3( position.x, position.y, position.z );
+					
+				}
+
+				geometry.colors = colors;
+
+				// lines
+
+				material = new THREE.LineBasicMaterial( { color: 0xff0000, opacity: 1, linewidth: 5 } );
+
+				var line, p, scale = 0.3, d = 225;
+				var parameters =  [[ material, scale*1.5, [0,0,0],  geometry ]];
+
+				for ( i = 0; i < parameters.length; ++ i ) {
+
+					p = parameters[ i ];
+					line = new THREE.Line( p[ 3 ],  p[ 0 ] );
+					line.scale.x = line.scale.y = line.scale.z =  p[ 1 ];
+					line.position.x = p[ 2 ][ 0 ];
+					line.position.y = p[ 2 ][ 1 ];
+					line.position.z = p[ 2 ][ 2 ];
+					scene.add( line );
+
+				}
+
+
+				stats = new Stats();
+				//container.appendChild(stats.dom);
+
+
+				//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length > 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+				}
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length == 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+				}
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				render();
+
+			}
+
+			function render() {
+
+				camera.position.x = -18;
+				camera.position.y = 500;
+
+				camera.lookAt( scene.position );
+
+				renderer.render( scene, camera );
+
+			}
+
+
+		</script>
+	</body>
+</html>

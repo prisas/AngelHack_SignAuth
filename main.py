@@ -2,6 +2,8 @@
 from sqlalchemy import *
 from flask import Flask, render_template, redirect, url_for, flash, request
 from datetime import datetime
+from random import randint
+
 
 app = Flask(__name__)
 
@@ -27,6 +29,7 @@ log = Table('logs', metadata,
     Column('date_time', Text, primary_key=True),
     Column('whereFrom', String),
     Column('accepted', Boolean),
+    Column('img_id', Integer)
 )
 #log.create()
 
@@ -63,10 +66,14 @@ def register_user():
 
 @app.route('/my_log')
 def show_log():
-    global rs
-    s = log.select(log.c.id == rs[0])
-    renderLogData(s)
-    return render_template('log_entry.html', status=status_connected)
+    global status_connected
+    if status_connected:
+        global rs
+        s = log.select(log.c.id == rs[0])
+        renderLogData(s)
+        return render_template('log_entry.html')
+    else:
+        return render_template('403.html')
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -101,8 +108,13 @@ def treat_register():
             my_password = request.form['password']
             my_password2 = request.form['password2']
             if my_password == my_password2:
+                v0 = randint(0, 3)
+                v1 = randint(0, 3)
+                v2 = randint(0, 3)
+                v3 = randint(0, 3)
+                new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
                 i = users.insert()
-                i.execute(name=request.form['name'], email=my_email, password=my_password)
+                i.execute(name=request.form['name'], email=my_email, password=my_password, img_id=new_signature)
                 flash('Successfully registered, now you can Log In!', 'success'),
                 return render_template('login.html')
             else:
@@ -111,6 +123,46 @@ def treat_register():
         else:
             flash('This email is already registered!', 'error')
             return redirect(url_for('login_user'))
+
+
+@app.route('/gensignature')
+def add_log_entry():
+    z = 0
+    global rs
+    s = users.select(users.c.id == rs[0])
+    rs = run(s)
+    i = log.insert()
+    while z < 10:
+        v0 = randint(0, 3)
+        v1 = randint(0, 3)
+        v2 = randint(0, 3)
+        v3 = randint(0, 3)
+        z += 1
+        new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
+        if new_signature == rs[4]:
+            i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=True, img_id=new_signature)
+            return redirect(url_for('show_log'))
+    i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=False, img_id=new_signature)
+    return redirect(url_for('show_log'))
+
+
+"""@app.route('/showsimulation')
+def showSignature():
+    global rs
+    # My signature
+    myv0 = rs[4]/1000
+    myv1 = (rs[4]%1000)/100
+    myv2 = (rs[4]%100)/10
+    myv3 = rs[4]%10
+    # DB signature
+    s = log.select(log.c.id == rs[0])
+"""
+@app.route('/backanimation')
+def wheretoback():
+    if status_connected:
+        return redirect(url_for('show_log'))
+    else:
+        return redirect(url_for('login_user'))
 
 
 @app.route('/logout')

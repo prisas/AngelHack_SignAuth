@@ -55,6 +55,7 @@
 	         <ul id="nav" class="nav">
 	            <li><a class="smoothscroll" href="/">Home</a></li>
 	            <li><a class="smoothscroll" href="/logout">Logout</a></li>
+	            <li><a class="smoothscroll" href="/gensignature">Generate signature</a></li>
 	         </ul> <!-- end #nav -->
 
 	      </nav> <!-- end #nav-wrap -->
@@ -77,6 +78,7 @@
 					<td colspan="1">{{ message[2] }}</td>
 					{% if message[3] == true %}<td><img src="{{ url_for('static', filename='images/tick.png') }}"></td>{% endif %}
 					{% if message[3] == false %}<td><img src="{{ url_for('static', filename='images/cross.png') }}"></td>{% endif %}
+					<td colspan="1">{{ message[1] }}</td>
 				</tr> 
 			{% endfor %}
 			</ul>
