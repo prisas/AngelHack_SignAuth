@@ -132,6 +132,7 @@ def add_log_entry():
     s = users.select(users.c.id == rs[0])
     rs = run(s)
     i = log.insert()
+    companies = ['Detusche Bank', 'BBVA', 'ING', 'McDonalds', 'SEUR', 'Postman Barcelona street 123']
     while z < 50:
         v0 = randint(0, 3)
         v1 = randint(0, 3)
@@ -141,9 +142,9 @@ def add_log_entry():
         new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
         new_signature1 = str(new_signature)
         if new_signature1 == rs[4]:
-            i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=True, img_id=new_signature)
+            i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom=companies[randint(0, 5)], accepted=True, img_id=new_signature)
             return redirect(url_for('show_log'))
-    i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=False, img_id=new_signature)
+    i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom=companies[randint(0, 5)], accepted=False, img_id=new_signature)
     return redirect(url_for('show_log'))
 
 
