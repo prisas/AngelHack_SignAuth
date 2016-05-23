@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Signature simulation</title>
+		<title>three.js webgl - lines - splines</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -47,7 +47,7 @@
 		<script src="../static/js/three.js"></script>
 		<script src="../static/js/hilbert2D.js"></script>
 		<script src="../static/js/Detector.js"></script>
-		<script src="../static/js/stats.min.js"></script>	
+		<script src="../static/js/stats.min.js"></script>
 
 		<script>
 
@@ -91,17 +91,22 @@
 				 *
 				 * function hilbert3D( center, size, iterations, v0, v1, v2, v3 ) */
 
+				var v0 = Math.floor((Math.random() * 10))%4;
+				var v1 = Math.floor((Math.random() * 10))%4;
+				var v2 = Math.floor((Math.random() * 10))%4;
+				var v3 = Math.floor((Math.random() * 10))%4;
+
+				console.log(v0, v1, v2, v3);
+
 				var geometry = new THREE.Geometry(),
-					geometry2 = new THREE.Geometry(),
-					points = hilbert2D( new THREE.Vector3( 0,0,0 ), 200.0, 0, {{ myv0 }}, {{ myv1 }}, {{ myv2 }}, {{ myv3 }}),
-					points2 = hilbert2D( new THREE.Vector3( 0,0,0 ), 200.0, 0, {{ logv0 }}, {{ logv1 }}, {{ logv2 }}, {{ logv3 }}),
-					colors = [], colors2 = [];
+					points = hilbert2D( new THREE.Vector3( 0,0,0 ), 200.0, 0, v0, v1, v2, v3),
+					colors = [];
 
 				n_sub = 20;
 
 				var position, position2, index, index2;
+
 				var spline = new THREE.Spline( points );
-				var spline2 = new THREE.Spline( points2 );
 
 				for ( i = 0; i < points.length * n_sub; i ++ ) {
 
@@ -109,52 +114,41 @@
 					position = spline.getPoint( index );
 
 					geometry.vertices[ i ] = new THREE.Vector3( position.x, position.y, position.z );
-				
-				}
-
-				for ( i = 0; i < points2.length * n_sub; i ++ ) {
-
-					index2 = i / ( points2.length * n_sub );
-					position2 = spline2.getPoint( index2 );
-
-					geometry2.vertices[ i ] = new THREE.Vector3( position2.x, position2.y, position2.z );
-
+					
 				}
 
 				geometry.colors = colors;
-				geometry2.colors = colors2;
 
 				// lines
 
 				material = new THREE.LineBasicMaterial( { color: 0xff0000, opacity: 1, linewidth: 5 } );
 
 				var line, p, scale = 0.3, d = 225;
-				var parameters =  [
-					[ material, scale*1.5, [-d/2,0,0],  geometry ],
-					[ material, scale*1.5, [d/2,0,0],  geometry2 ]
-				];
-				
-				p = parameters[ 0 ];
-				p2 = parameters[ 1 ];
-				line = new THREE.Line( p[ 3 ],  p[ 0 ] );
-				line2 = new THREE.Line( p2[ 3 ],  p2[ 0 ] );
-				line.scale.x = line.scale.y = line.scale.z =  p[ 1 ];
-				line.position.x = p[ 2 ][ 0 ];
-				line.position.y = p[ 2 ][ 1 ];
-				line.position.z = p[ 2 ][ 2 ];
-				line2.scale.x = line2.scale.y = line2.scale.z =  p2[ 1 ];
-				line2.position.x = p2[ 2 ][ 0 ];
-				line2.position.y = p2[ 2 ][ 1 ];
-				line2.position.z = p2[ 2 ][ 2 ];
-				scene.add( line );
-				scene.add( line2 );
+				var parameters =  [[ material, scale*1.5, [0,0,0],  geometry ]];
+
+				for ( i = 0; i < parameters.length; ++ i ) {
+
+					p = parameters[ i ];
+					line = new THREE.Line( p[ 3 ],  p[ 0 ] );
+					line.scale.x = line.scale.y = line.scale.z =  p[ 1 ];
+					line.position.x = p[ 2 ][ 0 ];
+					line.position.y = p[ 2 ][ 1 ];
+					line.position.z = p[ 2 ][ 2 ];
+					scene.add( line );
+
+				}
 
 
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+				stats = new Stats();
+				//container.appendChild(stats.dom);
 
-				
+
+				//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				//
+
 				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
@@ -213,10 +207,10 @@
 
 			function render() {
 
-				camera.position.x += ( mouseX - camera.position.x ) * .05;
-				camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
+				camera.position.x = -18;
+				camera.position.y = 500;
+
 				camera.lookAt( scene.position );
-				var time = Date.now() * 0.0005;
 
 				renderer.render( scene, camera );
 

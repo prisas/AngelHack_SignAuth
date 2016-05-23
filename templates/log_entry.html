@@ -67,10 +67,10 @@
    <table class=flashes_logs>
    	{% with messages = get_flashed_messages() %}
 		{% if messages %}
-			<tr>
+			<tr style="background-color:#748184">
 				<th>Date</th>
-    			<th>Organization</th>
-    			<th>Status</th>
+    		<th>Organization</th>
+    		<th>Status</th>
 			</tr>
 			{% for message in messages %}
 				<tr>  
@@ -78,9 +78,9 @@
 					<td>{{ message[2] }}</td>
                     <td>
                         <form id='formName' action='/showsimulation' method='post'>
-                            <input name='dataCross' type='text' value=message[4] style='display:none'/>
-                     {% if message[3] == true %} <div><input type='submit' value='' style="background-color:#008000")></div>{% endif %}   
-                     {% if message[3] == false %} <div><input type='submit' value='' style="background-color:#ff0000")></div>{% endif %}
+                            <input name='dataCross' type='text' value='{{ message[4] }}' style='display:none'/>
+                            {% if message[3] == true %} <div><input type='submit' value='' style="background-color:#008000")></div>{% endif %}   
+                            {% if message[3] == false %} <div><input type='submit' value='' style="background-color:#ff0000")></div>{% endif %}
                         </form>
                     </td>                       
 				</tr> 

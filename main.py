@@ -1,8 +1,8 @@
-# from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from flask import Flask, render_template, redirect, url_for, flash, request
 from datetime import datetime
 from random import randint
+import hashlib
 
 
 app = Flask(__name__)
@@ -89,7 +89,8 @@ def treat_login():
             return redirect(url_for('login_user'))
         else:
             my_password = request.form['password']
-            if my_password == rs[3]:
+            encrypted_pass = hashlib.sha256(my_password).hexdigest()
+            if encrypted_pass == rs[3]:
                 global status_connected
                 status_connected = True
                 return redirect(url_for('show_log'))
@@ -108,13 +109,14 @@ def treat_register():
             my_password = request.form['password']
             my_password2 = request.form['password2']
             if my_password == my_password2:
+                encrypted_pass = hashlib.sha256(my_password).hexdigest()
                 v0 = randint(0, 3)
                 v1 = randint(0, 3)
                 v2 = randint(0, 3)
                 v3 = randint(0, 3)
                 new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
                 i = users.insert()
-                i.execute(name=request.form['name'], email=my_email, password=my_password, img_id=new_signature)
+                i.execute(name=request.form['name'], email=my_email, password=encrypted_pass, img_id=new_signature)
                 flash('Successfully registered, now you can Log In!', 'success'),
                 return render_template('login.html')
             else:
@@ -132,17 +134,19 @@ def add_log_entry():
     s = users.select(users.c.id == rs[0])
     rs = run(s)
     i = log.insert()
-    while z < 10:
+    companies = ['Detusche Bank', 'BBVA', 'ING', 'McDonalds', 'SEUR', 'Postman Barcelona street 123']
+    while z < 50:
         v0 = randint(0, 3)
         v1 = randint(0, 3)
         v2 = randint(0, 3)
         v3 = randint(0, 3)
         z += 1
         new_signature = v0 * 1000 + v1 * 100 + v2 * 10 + v3
-        if new_signature == rs[4]:
-            i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=True, img_id=new_signature)
+        new_signature1 = str(new_signature)
+        if new_signature1 == rs[4]:
+            i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom=companies[randint(0, 5)], accepted=True, img_id=new_signature)
             return redirect(url_for('show_log'))
-    i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom='Barcelona', accepted=False, img_id=new_signature)
+    i.execute(id=rs[0], date_time=str(datetime.now()), whereFrom=companies[randint(0, 5)], accepted=False, img_id=new_signature)
     return redirect(url_for('show_log'))
 
 
